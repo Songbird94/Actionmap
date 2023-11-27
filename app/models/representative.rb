@@ -2,6 +2,7 @@
 
 class Representative < ApplicationRecord
   has_many :news_items, dependent: :delete_all
+  # serialize :contact_address, Array
 
   def self.civic_api_to_representative_params(rep_info)
     reps = []
@@ -17,7 +18,7 @@ class Representative < ApplicationRecord
         end
       end
 
-      rep = Representative.create!({ name: official.name, ocdid: ocdid_temp,
+      rep = Representative.find_or_create_by!({ name: official.name, ocdid: ocdid_temp,
           title: title_temp })
       reps.push(rep)
     end
