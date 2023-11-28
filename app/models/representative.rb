@@ -28,6 +28,7 @@ class Representative < ApplicationRecord
   end
 
   def self.find_rep(official, ocdid, title, address)
+    address = official.address&.at(0)
     Representative.find_or_create_by!(
       {
         name:            official.name,
