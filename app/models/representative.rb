@@ -18,8 +18,30 @@ class Representative < ApplicationRecord
         end
       end
 
-      rep = Representative.find_or_create_by!({ name: official.name, ocdid: ocdid_temp,
-          title: title_temp })
+      address = official.address&.at(0)
+      rep = Representative.find_or_create_by!(
+        {
+          name:            official.name,
+          ocdid:           ocdid_temp,
+          title:           title_temp,
+          address: address&.line1,
+          # address2: address&.line2,
+          city:     address&.city,
+          state:    address&.state,
+          zip:      address&.zip,
+          political_party:    official.party,
+          photo_url:    official.photo_url.present? ? official.photo_url[0] : nil
+        }
+      )
+      # rep.assign_attributes(
+      #   address: address&.line1,
+      #   city:     address&.city,
+      #   state:    address&.state,
+      #   zip:      address&.zip,
+      #   political_party:    official.party,
+      #   photo_url:    official.urls.present? ? official.urls[0] : nil
+      # )
+
       reps.push(rep)
     end
 
