@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= @representative.name %></title>
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1><%= @representative.name %></h1>
+
+        <% if @representative.photo_url.present? %>
+          <img src="<%= @representative.photo_url %>" alt="<%= @representative.name %>" class="img-fluid rounded">
+        <% end %>
+
+
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tbody>
+              <% if @representative.title.present? %>
+                <tr>
+                  <th>Title</th>
+                  <td><%= @representative.title %></td>
+                </tr>
+              <% end %>
+
+              <% if @representative.address.present? %>
+                <tr>
+                  <th>Address</th>
+                  <td>
+                    <%= @representative.address %>, 
+                    <%= @representative.city %>, 
+                    <%= @representative.state %>, 
+                    <%= @representative.zip %>
+                  </td>
+                </tr>
+              <% end %>
+
+              <% if @representative.political_party.present? %>
+                <tr>
+                  <th>Political Party</th>
+                  <td><%= @representative.political_party %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
