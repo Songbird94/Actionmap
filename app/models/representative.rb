@@ -18,8 +18,8 @@ class Representative < ApplicationRecord
         end
       end
 
-      address = official.address&.at(0)
-      rep = find_rep(official, ocdid_temp, title_temp, address)
+      # address = official.address&.at(0)
+      rep = find_rep(official, ocdid_temp, title_temp)
 
       reps.push(rep)
     end
@@ -27,7 +27,7 @@ class Representative < ApplicationRecord
     reps
   end
 
-  def self.find_rep(official, ocdid, title, address)
+  def self.find_rep(official, ocdid, title)
     address = official.address&.at(0)
     Representative.find_or_create_by!(
       {
