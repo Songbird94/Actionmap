@@ -36,6 +36,10 @@ class MyNewsItemsController < SessionController
                 notice: 'News was successfully destroyed.'
   end
 
+  def index
+    render :search, error: 'An error occurred when searching for the news item.'
+  end
+
   private
 
   def set_representative
@@ -50,6 +54,14 @@ class MyNewsItemsController < SessionController
 
   def set_news_item
     @news_item = NewsItem.find(params[:id])
+  end
+
+  def set_issues_list
+    @issues_list = ['Free Speech', 'Immigration', 'Terrorism',
+                    'Social Security and Medicare', 'Abortion', 'Student Loans', 'Gun Control',
+                    'Unemployment', 'Climate Change', 'Homelessness', 'Racism', 'Tax Reform',
+                    'Net Neutrality', 'Religious Freedom', 'Border Security', 'Minimum Wage',
+                    'Equal Pay']
   end
 
   # Only allow a list of trusted parameters through.
