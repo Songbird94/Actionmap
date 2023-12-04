@@ -42,6 +42,7 @@
                   <td><%= @representative.political_party %></td>
                 </tr>
               <% end %>
+              <%= link_to "News Articles", representative_news_items_path(@representative.id), class: 'btn btn-primary' %>
             </tbody>
           </table>
         </div>
