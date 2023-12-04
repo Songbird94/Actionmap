@@ -6,7 +6,7 @@ class NewsItemsController < ApplicationController
 
   def index
     @news_items = @representative.news_items
-    #@news_items = NewsItem.find_by(params[:representative_id])
+    # @news_items = NewsItem.find_by(params[:representative_id])
   end
 
   def show; end
