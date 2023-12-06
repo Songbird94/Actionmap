@@ -1,0 +1,15 @@
+.row.mt-2
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        %h1.text-center Search for Representative and Issue
+
+    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+        = form_tag show_articles_my_news_item_path(@representative), method: :get do
+            .form-group
+                = label_tag :representative_id, 'Select Representative'
+                = select_tag :representative_id, options_for_select(@representatives_list), class: 'form-control'
+
+            .form-group
+                = label_tag :issue, 'Select Issue'
+                = text_field_tag :issue, params[:issue], class: 'form-control'
+
+            = submit_tag 'Search', class: 'btn btn-primary'

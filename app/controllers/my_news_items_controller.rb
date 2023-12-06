@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
+require 'news-api'
+
 class MyNewsItemsController < SessionController
   before_action :set_representative
   before_action :set_representatives_list
   before_action :set_news_item, only: %i[edit update destroy]
 
   def new
+    redirect_to search_my_news_item_path(representative_id: @representative)
     @news_item = NewsItem.new
   end
 
@@ -38,6 +41,27 @@ class MyNewsItemsController < SessionController
 
   def index
     render :search, error: 'An error occurred when searching for the news item.'
+  end
+
+  def search
+    @representatives_list = Representative.all.map { |r| [r.name, r.id] }
+  end
+
+  def show_articles
+    @representative = Representative.find(params[:representative_id])
+    @issue = params[:issue]
+
+    newsapi = News.new(Rails.application.credentials[:NEWS_API_KEY])
+
+    articles = newsapi.get_everything(
+      q:        "#{@representative.name}+#{@issue}",
+      sortBy:   'relevancy',
+      page:     1,
+      pageSize: 5
+    )
+
+    # @articles = articles['articles']
+    @articles = articles
   end
 
   private

@@ -38,7 +38,18 @@ Rails.application.routes.draw do
                                                                       via: %i[put patch]
         match '/representatives/:representative_id/my_news_item/:id', to:  'my_news_items#destroy',
                                                                       via: [:delete]
+        #get '/representatives/:representative_id/my_news_item/show_articles' => 'my_news_items#show_articles', as: :show_articles_my_news_item
+        #match '/representatives/:representative_id/my_news_item/show_articles', to: 'my_news_items#show_articles', via: [:post]
     end
+
+  
+    get '/my_news_item/search' => 'my_news_items#search', as: :search_my_news_item
+    get '/my_news_item/show_articles' => 'my_news_items#show_articles', as: :show_articles_my_news_item
+    match '/representatives/:representative_id/my_news_item/show_articles', to: 'my_news_items#show_articles', via: [:post]
+    # post '/my_news_item/save_article' => 'my_news_items#save_article', as: :save_article_my_news_item
+
+
+
     get '/search/(:address)' => 'search#search', :as => 'search_representatives'
     get '/show' => 'representatives#show', :as => 'show_representative'
 end

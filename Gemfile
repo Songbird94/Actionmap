@@ -41,6 +41,8 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # pre-receive rake tasks hook so it is included for production environment.
 gem 'rubyzip'
 
+gem 'news-api'
+
 gem 'date_validator'
 
 group :development, :test do
