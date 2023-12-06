@@ -1,23 +1,34 @@
 .row.mt-2
-    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
-        %h1.text-center Select an Article
+  .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+    %h1.text-center Select an Article
 
-    .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
-        = form_tag representative_new_my_news_item_path(@representative), method: :post do
-            - @articles.each_with_index do |article, index|
-                .form-check
-                    = radio_button_tag 'article_index', index
-                    .article-details
-                        %strong= article.title
-                        %p= article.description
-                        %p URL: #{article.url}
-                        %label Rating:
-                        = number_field_tag 'rating', nil, in: 1..5, class: 'form-control'
-                        = hidden_field_tag "news_item[#{index}][title]", article.title
-                        = hidden_field_tag "news_item[#{index}][description]", article.description
-                        = hidden_field_tag "news_item[#{index}][url]", article.url
+  .col-12.col-md-6.offset-md-3.col-xl-4.offset-xl-4
+    = form_tag representative_new_my_news_item_path(@representative), method: :post do
+      .field
+        %strong Representative:
+        = link_to @representative.name, representative_path(@representative)
+        = hidden_field_tag "news_item[representative_id]", @representative.id
+        = hidden_field_tag "news_item[representative_name]", @representative.name
 
+      .field
+        %strong Issue:
+        = @issue
+        = hidden_field_tag "news_item[issue]", @issue
 
+      - @articles.each_with_index do |article, index|
+        .form-check
+          = radio_button_tag 'article_index', index
+          .article-details
+            %strong= article.title
+            %p= article.description
+            %p URL: #{article.url}
+            %label Rating:
+            = number_field_tag 'rating', nil, in: 1..5, class: 'form-control'
+            = hidden_field_tag "news_item[#{index}][title]", article.title
+            = hidden_field_tag "news_item[#{index}][description]", article.description
+            = hidden_field_tag "news_item[#{index}][url]", article.url
+            = hidden_field_tag "news_item[representative_id]", @representative.id
+            = hidden_field_tag "news_item[representative_name]", @representative.name
+            = hidden_field_tag "news_item[issue]", @issue
 
-
-            = submit_tag 'Save', class: 'btn btn-primary'
+      = submit_tag 'Save', class: 'btn btn-primary'
