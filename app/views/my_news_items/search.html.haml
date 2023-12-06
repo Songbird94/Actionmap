@@ -10,6 +10,6 @@
 
             .form-group
                 = label_tag :issue, 'Select Issue'
-                = text_field_tag :issue, params[:issue], class: 'form-control'
+                = select_tag :issue, options_for_select(@issues_list), class: 'form-control'
 
             = submit_tag 'Search', class: 'btn btn-primary'

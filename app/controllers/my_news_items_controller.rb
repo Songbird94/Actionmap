@@ -6,6 +6,7 @@ class MyNewsItemsController < SessionController
   before_action :set_representative
   before_action :set_representatives_list
   before_action :set_news_item, only: %i[edit update destroy]
+  before_action :set_issues_list, only: %i[new edit create update]
 
   def new
     redirect_to search_my_news_item_path(representative_id: @representative)
@@ -15,7 +16,14 @@ class MyNewsItemsController < SessionController
   def edit; end
 
   def create
+    selected_article_index = params[:article_index]
     @news_item = NewsItem.new(news_item_params)
+    @news_item.title = params.dig('news_item', selected_article_index, 'title')
+    @news_item.link = params.dig('news_item', selected_article_index, 'link')
+    @news_item.description = params.dig('news_item', selected_article_index, 'description')
+    @news_item.representative_id = params[:representative_id]
+    @news_item.issue = params[:news_item][:issue]
+    @news_item.rating = params[:rating]
     if @news_item.save
       redirect_to representative_news_item_path(@representative, @news_item),
                   notice: 'News item was successfully created.'
@@ -45,6 +53,11 @@ class MyNewsItemsController < SessionController
 
   def search
     @representatives_list = Representative.all.map { |r| [r.name, r.id] }
+    @issues_list = ['Free Speech', 'Immigration', 'Terrorism',
+                    'Social Security and Medicare', 'Abortion', 'Student Loans', 'Gun Control',
+                    'Unemployment', 'Climate Change', 'Homelessness', 'Racism', 'Tax Reform',
+                    'Net Neutrality', 'Religious Freedom', 'Border Security', 'Minimum Wage',
+                    'Equal Pay']
   end
 
   def show_articles
@@ -90,6 +103,6 @@ class MyNewsItemsController < SessionController
 
   # Only allow a list of trusted parameters through.
   def news_item_params
-    params.require(:news_item).permit(:news, :title, :description, :link, :representative_id, :rating)
+    params.require(:news_item).permit(:news, :title, :description, :link, :representative_id, :issue, :rating)
   end
 end
