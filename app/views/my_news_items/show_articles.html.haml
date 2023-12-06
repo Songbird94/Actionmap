@@ -10,7 +10,7 @@
                     .article-details
                         %strong= article.title
                         %p= article.description
-                        %p= "URL: #{article.url}"
+                        %p URL: #{article.url}
                         %label Rating:
                         = number_field_tag 'rating', nil, in: 1..5, class: 'form-control'
                         = hidden_field_tag "news_item[#{index}][title]", article.title
@@ -18,5 +18,5 @@
                         = hidden_field_tag "news_item[#{index}][url]", article.url
 
 
-                
+
             = submit_tag 'Save', class: 'btn btn-primary'
