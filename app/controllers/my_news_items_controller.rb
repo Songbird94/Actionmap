@@ -15,7 +15,12 @@ class MyNewsItemsController < SessionController
   def edit; end
 
   def create
-    @news_item = NewsItem.new(news_item_params)
+    news_item_params.each do |_index, news_item_params|
+      news_item_params[:representative_id] = @representative.id
+      news_item_params[:rating] = params[:rating]
+    end
+    selected_article_index = params[:article_index].to_i
+    @news_item = NewsItem.new(news_item_params[selected_article_index])
     if @news_item.save
       redirect_to representative_news_item_path(@representative, @news_item),
                   notice: 'News item was successfully created.'
