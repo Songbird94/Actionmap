@@ -5,9 +5,9 @@ require 'google/apis/civicinfo_v2'
 
 RSpec.describe Representative do
   context 'when I add representatives once to the site' do
-    existing_rep = described_class.create(name: 'Anvi Kunta', ocdid: '1234', title: 'Supreme Leader')
+    existing_rep = described_class.create(name: 'John Doe', ocdid: '1234', title: 'Supreme Leader')
     rep = OpenStruct.new
-    rep.officials = [OpenStruct.new(name: 'Anvi Kunta')]
+    rep.officials = [OpenStruct.new(name: 'John Doe')]
     rep.offices = [OpenStruct.new(name: 'Supreme Leader', division_id: '1234', official_indices: [0])]
     reps = described_class.civic_api_to_representative_params(rep)
     it 'contains one entry' do
@@ -32,16 +32,16 @@ RSpec.describe Representative do
       expect { rep.ocdid }.not_to raise_error
     end
 
-    # it 'has the fields contact_address' do
-    #   expect { rep.contact_address }.not_to raise_error
-    # end
+    it 'has the fields address' do
+      expect { rep.address }.not_to raise_error
+    end
 
-    # it 'has the fields political_party' do
-    #   expect { rep.political_party }.not_to raise_error
-    # end
+    it 'has the fields political_party' do
+      expect { rep.political_party }.not_to raise_error
+    end
 
-    # it 'has the fields photo_url' do
-    #   expect { rep.photo_url }.not_to raise_error
-    # end
+    it 'has the fields photo_url' do
+      expect { rep.photo_url }.not_to raise_error
+    end
   end
 end
